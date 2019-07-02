@@ -5,16 +5,22 @@
 
 ENV_DIR=$3
 
+echo "CustomSSHKey: Working with env $ENV_DIR\n"
+echo "key: $ENV_DIR/CUSTOM_SSH_KEY\n"
+echo "hosts: $ENV_DIR/CUSTOM_SSH_KEY_HOSTS\n"
+
 if [[ -f $ENV_DIR/CUSTOM_SSH_KEY && -f $ENV_DIR/CUSTOM_SSH_KEY_HOSTS ]]; then
 
   echo "" >&1
 
   # Ensure we have an ssh folder
   if [ ! -d ~/.ssh ]; then
+    echo "Creating .ssh directory\n"
     mkdir -p ~/.ssh
     chmod 700 ~/.ssh
   fi
 
+  echo "Creating ssh key file\n"
   # Load the private key into custom_key file.
   base64 --decode $ENV_DIR/CUSTOM_SSH_KEY > ~/.ssh/custom_key
 
